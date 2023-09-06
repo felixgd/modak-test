@@ -17,7 +17,7 @@ func main() {
 
 	rateLimitRules := map[string]ratelimiterrules.RateLimitRule{
 		"status":    {MaxCount: 2, Duration: time.Minute},
-		"news":      {MaxCount: 1, Duration: time.Hour},
+		"news":      {MaxCount: 1, Duration: 24 * time.Hour},
 		"marketing": {MaxCount: 3, Duration: time.Hour},
 	}
 
