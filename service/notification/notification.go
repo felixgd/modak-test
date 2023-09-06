@@ -42,16 +42,16 @@ func (s *NotificationServiceImpl) Send(notification notification.Notification) {
 	user := s.db.FindUserByID(notification.UserID)
 
 	if user == nil {
-		fmt.Printf("Unknown user: %v\n", user.ID)
+		fmt.Printf("Unknown user: %v\n", notification.UserID)
 		return
 	}
 
 	if s.isRateLimited(user, notification.Type, rule.MaxCount, rule.Duration) {
-		fmt.Printf("Rate limited: %s\n", notification.Message)
+		fmt.Printf("%s Notification Rate limited for userID: %v\n", notification.Type, user.ID)
 		return
 	}
 
-	s.gateway.Send(*user, notification.Message)
+	s.gateway.Send(*user, notification)
 	s.incrementCounter(user, notification.Type)
 }
 
